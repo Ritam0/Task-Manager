@@ -1,11 +1,12 @@
 const  express =require('express');
 const connect_db=require('./db') 
 const user_model=require('./models/user_model')
-
+const cors=require('cors')
 const User=user_model;
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+app.use(cors());
 app.use(express.json());
 
 app.listen(PORT, async () => {
@@ -75,8 +76,8 @@ app.delete('/deleteTask', async (req, res) => {
 });
 app.get('/getTasks', async (req, res) => {
     try {
-        const { email } = req.body;
-
+        const { email } = req.query;
+        console.log("email:",email)
         if (!email) {
             return res.status(400).json({ message: 'Email is required' });
         }
