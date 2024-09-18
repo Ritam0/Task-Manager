@@ -36,7 +36,7 @@ const MyCalander = () => {
 
   const handleDeleteTask = async taskId => {
     try {
-      await axios.delete('http://localhost:5000/deleteTask', {
+      await axios.delete('https://task-manager-73jm.onrender.com/deleteTask', {
         data: { email, taskId }
       });
       setTasks(tasks.filter(task => task._id !== taskId));
@@ -48,7 +48,7 @@ const MyCalander = () => {
 
   const fetchTasks = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/getTasks', {
+      const response = await axios.get('https://task-manager-73jm.onrender.com/getTasks', {
         params: { email }
       });
       setTasks(response.data.tasks || []);
@@ -61,7 +61,7 @@ const MyCalander = () => {
   const handleAddTask = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/addTask', {
+      const response = await axios.post('https://task-manager-73jm.onrender.com/addTask', {
         email,
         ...newTask
       });
