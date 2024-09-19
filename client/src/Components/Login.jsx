@@ -81,7 +81,7 @@ const Login = () => {
         </div>
       ) : (
         <div className="bg-[#c3c4aa11] shadow-md rounded-lg p-8 w-full max-w-md">
-          <img src={localStorage.getItem("photo")} alt="" />
+         
           <h2 className="text-2xl font-bold mb-6 text-center">Welcome to Task Manager! {localStorage.getItem("Name")}</h2>
           <button
             className="bg-red-500 text-white px-4 py-2 rounded-lg shadow hover:bg-red-600 transition duration-300"

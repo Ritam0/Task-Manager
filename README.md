@@ -14,6 +14,8 @@ Link - https://task-manager-ritam.vercel.app/
 
 **npm Packages:** React Big Calander, React Toastify
 
+**Others:** Cloudinary
+
 ## Key Features 🗝️
 
 - Big Calendar Which stores tasks 📅
