@@ -234,7 +234,7 @@ const MyCalander = () => {
 
         <div className="addTasks bg-[#c3c4aa11] p-4 rounded shadow-lg w-full max-w-md">
           <form onSubmit={handleAddTask} className="mt-4">
-            <h3 className="text-lg font-semibold mb-2">Task Details</h3>
+            <h3 className="text-lg font-semibold mb-2">Enter Your Event Here</h3>
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">Title</label>
               <input
@@ -294,7 +294,7 @@ const MyCalander = () => {
               type="submit"
               className="px-4 py-2 bg-[#51d422db] text-black hover:bg-green-500 rounded"
             >
-              Save Task
+              Save Event
             </button>
           </form>
         </div>

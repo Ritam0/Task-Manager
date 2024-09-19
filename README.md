@@ -1,6 +1,6 @@
-# Task Manager ✏️
+# Task /Event Manager ✏️
 
-A Calander Which Manages Your Task Properly
+A Calander Which Manages Your Task and Events Properly
 
 Link - https://task-manager-ritam.vercel.app/
 
