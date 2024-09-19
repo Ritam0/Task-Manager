@@ -17,34 +17,41 @@ app.listen(PORT, async () => {
 
 app.post('/addTask', async (req, res) => {
     try {
-        const { email, title, description, startDateTime, endDateTime } = req.body;
-
+        const { email, title, description, startDateTime, endDateTime, imgurl } = req.body;
+        console.log("1");
         const user = await User.findOne({ email });
+        console.log("2");
         if (!user){
+            console.log("3");
             const newTask = {
                 title,
                 description,
                 startDateTime: new Date(startDateTime),
                 endDateTime: new Date(endDateTime),
+                imgurl,
             };
             iniuser = new User({
                 email,
                 tasks: [newTask]
             });
-    
+            console.log("4");
             await iniuser.save();
-    
+            console.log("5");
             res.status(201).json({ message: 'User created successfully', iniuser });
         }
         else{
+            console.log("6");
             const newTask = {
                 title,
                 description,
                 startDateTime: new Date(startDateTime),
                 endDateTime: new Date(endDateTime),
+                imgurl,
             };
             user.tasks.push(newTask);
+            console.log("7");
             await user.save();
+            console.log("8");
             res.status(201).json({ message: 'Task added successfully', user });
         }
         
@@ -95,7 +102,7 @@ app.get('/getTasks', async (req, res) => {
 
 app.post('/editTask', async (req, res) => {
     try {
-        const { email, title, description, startDateTime, endDateTime } = req.body;
+        const { email, title, description, startDateTime, endDateTime, imgurl } = req.body;
 
         const user = await User.findOne({ email });
         
@@ -104,6 +111,7 @@ app.post('/editTask', async (req, res) => {
             description,
             startDateTime: new Date(startDateTime),
             endDateTime: new Date(endDateTime),
+            imgurl,
         };
         user.tasks.push(newTask);
         await user.save();
