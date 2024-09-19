@@ -14,7 +14,7 @@ const MyCalander = () => {
   // States of variables
   const [event, setEvent] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [email] = useState(localStorage.getItem('email'));
+  const [email] = useState(localStorage.getItem('email') || null);
   const [tasks, setTasks] = useState([]);
   const [error, setError] = useState(null);
   const [image, setImage] = useState(null);
@@ -195,7 +195,7 @@ const MyCalander = () => {
         className='bg-[#c3c4aa11] p-4 border border-[2px] rounded-md'
       />
 
-      <div className="rightdiv flex justify-center items-center gap-8 flex-col  w-[90%]">
+      <div className={`rightdiv flex justify-center items-center gap-8 flex-col  w-[90%]  ${!email?'hidden':'block'}`}>
         <div className="Tasks bg-[#c3c4aa11] p-4 rounded shadow-lg w-full">
           <h3 className="text-lg font-semibold mb-2">Tasks for {selectedDate.toDateString()}</h3>
           {filterTasksByDate(tasks, selectedDate).length === 0 ? (

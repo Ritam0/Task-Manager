@@ -36,6 +36,7 @@ const Login = () => {
       localStorage.setItem("Name", data.user.displayName);
       localStorage.setItem("userId", data.user.uid);
       setIsLoggedIn(true);
+      window.location.reload();
     } catch (error) {
       setError(error.message);
     }
@@ -47,6 +48,7 @@ const Login = () => {
     localStorage.removeItem('Name');
     localStorage.removeItem('userId');
     setIsLoggedIn(false);
+    window.location.reload();
   };
 
   useEffect(() => {
