@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { NotificationManager, NotificationContainer } from 'react-notifications';
-import 'react-notifications/lib/notifications.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import moment from 'moment';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
@@ -22,6 +22,9 @@ const MyCalander = () => {
     startDateTime: new Date(),
     endDateTime: new Date(),
   });
+  const [notifiedTasks, setNotifiedTasks] = useState(new Set()); 
+
+  const notify = (taskTitle) => toast(`Task "${taskTitle}" is starting now!`);
 
   const setAllEvents = (tasks) => {
     const newEvents = tasks.map(task => ({
@@ -45,6 +48,18 @@ const MyCalander = () => {
     }
   };
 
+  const checkTaskStart = (task) => {
+    const now = new Date();
+    const taskStartTime = new Date(task.startDateTime);
+    const timeDifference = taskStartTime - now;
+    if (timeDifference > 0 && !notifiedTasks.has(task._id)) {
+      setTimeout(() => {
+        notify(task.title);
+        setNotifiedTasks((prev) => new Set(prev).add(task._id));
+      }, timeDifference);
+    }
+  };
+
   const fetchTasks = async () => {
     try {
       const response = await axios.get('https://task-manager-73jm.onrender.com/getTasks', {
@@ -52,28 +67,9 @@ const MyCalander = () => {
       });
       setTasks(response.data.tasks || []);
       setAllEvents(response.data.tasks);
-      scheduleTaskNotifications(response.data.tasks);
     } catch (err) {
       setError('Failed to fetch tasks');
     }
-  };
-
-  const scheduleTaskNotifications = (tasks) => {
-    tasks.forEach(task => {
-      const taskStart = new Date(task.startDateTime).getTime();
-      const now = new Date().getTime();
-      const timeToNotify = taskStart - now;
-
-      if (timeToNotify > 0) {
-        setTimeout(() => {
-          NotificationManager.info(
-            `Task "${task.title}" is starting soon!`,
-            'Task Reminder',
-            3000
-          );
-        }, timeToNotify); 
-      }
-    });
   };
 
   const handleAddTask = async (e) => {
@@ -95,17 +91,6 @@ const MyCalander = () => {
     }
   };
 
-  const handleEditTask = (task) => {
-    setNewTask({
-      title: task.title,
-      description: task.description,
-      startDateTime: task.startDateTime,
-      endDateTime: task.endDateTime,
-    });
-    handleDeleteTask(task._id);
-  };
-
-  
   const filterTasksByDate = (tasks, selectedDate) => {
     return tasks.filter(task => {
       const taskDate = new Date(task.startDateTime);
@@ -115,7 +100,12 @@ const MyCalander = () => {
 
   useEffect(() => {
     fetchTasks();
-  }, [email]);
+  }, []);
+
+  // Whenever tasks update, check task start times
+  useEffect(() => {
+    tasks.forEach(task => checkTaskStart(task));
+  }, [tasks]);
 
   return (
     <div className="h-[100%] flex flex-col items-center justify-center">
@@ -151,12 +141,6 @@ const MyCalander = () => {
                     onClick={() => handleDeleteTask(task._id)}
                   >
                     🗑️
-                  </button>
-                  <button
-                    className="text-red-500 ml-4 hover:text-red-700"
-                    onClick={() => handleEditTask(task)}
-                  >
-                    ✏️
                   </button>
                 </li>
               ))}
@@ -214,16 +198,14 @@ const MyCalander = () => {
 
             <button
               type="submit"
-              className="px-4 py-2 bg-green-500 text-white rounded"
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
             >
-              Save Task
+              Add Task
             </button>
           </form>
         </div>
       </div>
-
-      {/* Notification container renders the notifications */}
-      <NotificationContainer />
+      <ToastContainer />
     </div>
   );
 };

@@ -93,4 +93,26 @@ app.get('/getTasks', async (req, res) => {
     }
 });
 
+app.post('/editTask', async (req, res) => {
+    try {
+        const { email, title, description, startDateTime, endDateTime } = req.body;
+
+        const user = await User.findOne({ email });
+        
+        const newTask = {
+            title,
+            description,
+            startDateTime: new Date(startDateTime),
+            endDateTime: new Date(endDateTime),
+        };
+        user.tasks.push(newTask);
+        await user.save();
+        res.status(201).json({ message: 'Task edited successfully', user });
+        
+        
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to edit task' });
+    }
+});
+
 
