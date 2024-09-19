@@ -1,14 +1,13 @@
 import React from 'react'
 import Login from './Login'
 import MyCalander from './Calander'
-import ImageUpload from './ImageUpload'
 
 const Page = () => {
   return (
-    <div>
-        <MyCalander/>
+    <div className='flex flex-col items-center justify-center gap-8 pt-4'>
       <Login/>
-      <ImageUpload/>
+        <MyCalander/>
+      
     </div>
   )
 }

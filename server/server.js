@@ -84,7 +84,6 @@ app.delete('/deleteTask', async (req, res) => {
 app.get('/getTasks', async (req, res) => {
     try {
         const { email } = req.query;
-        console.log("email:",email)
         if (!email) {
             return res.status(400).json({ message: 'Email is required' });
         }

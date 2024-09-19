@@ -54,9 +54,9 @@ const Login = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex flex-col items-center justify-center max-h-[300px] max-w-[500px] bg-[#c3c4aa11]">
       {!isLoggedIn ? (
-        <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-md">
+        <div className="bg-[#c3c4aa11] shadow-md rounded-lg p-8 w-full max-w-md">
           <h2 className="text-2xl font-bold mb-6 text-center text-grreen">Login</h2>
           <button
             className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition duration-300"
@@ -78,8 +78,9 @@ const Login = () => {
           {error && <p className="text-red-500 text-center mt-4">{error}</p>}
         </div>
       ) : (
-        <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-md">
-          <h2 className="text-2xl font-bold mb-6 text-center">Welcome!</h2>
+        <div className="bg-[#c3c4aa11] shadow-md rounded-lg p-8 w-full max-w-md">
+          <img src={localStorage.getItem("photo")} alt="" />
+          <h2 className="text-2xl font-bold mb-6 text-center">Welcome to Task Manager! {localStorage.getItem("Name")}</h2>
           <button
             className="bg-red-500 text-white px-4 py-2 rounded-lg shadow hover:bg-red-600 transition duration-300"
             onClick={Logout}

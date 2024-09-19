@@ -4,8 +4,7 @@ import Page from './Components/page';
 
 function App() {
   return (
-    <div className="App">
-      Task Managers
+    <div className="App w-full bg-[#c4aaaa11]">
       <Page/>
     </div>
   );
